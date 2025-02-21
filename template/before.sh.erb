@@ -1,3 +1,14 @@
+<%
+# Set our working directory.
+folder = Pathname.new(context.working_dir)
+
+if ! folder.exist?
+    folder = Pathname.new(ENV['HOME'])
+elsif folder.file?
+    folder = folder.parent
+end
+%>
+
 # Export the module function if it exists
 [[ $(type -t module) == "function" ]] && export -f module
 
@@ -9,3 +20,5 @@ export host="${host}"
 
 # Generate SHA1 encrypted password (requires OpenSSL installed)
 export password="$(create_passwd 16)"
+
+export working_folder="<%= folder %>"
